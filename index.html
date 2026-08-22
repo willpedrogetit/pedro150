@@ -208,9 +208,9 @@ const LINKEDIN_URL = "https://www.linkedin.com/in/salgueiromp/"; // profile
 const ORIGIN_POST = "https://lnkd.in/p/edJrJ-a6"; // the post that started everything
 /* Hiring funnel phases (day the phase ends) */
 const PHASES = [
-  {name:"Phase 1 · Enter interview processes", end:78,  tint:"#E4EFE8"},
-  {name:"Phase 2 · Interview rounds",          end:122, tint:"#F3EDDD"},
-  {name:"Phase 3 · Offer & negotiation",       end:150, tint:"#F2E4E0"}
+  {name:"Phase 1: Enter processes", end:78,  tint:"#E4EFE8"},
+  {name:"Phase 2: Interviews",      end:122, tint:"#F3EDDD"},
+  {name:"Phase 3: Offer",           end:150, tint:"#F2E4E0"}
 ];
 /* ========================================== */
 
@@ -258,9 +258,14 @@ function drawKM(today){
   let g="";
   /* phase bands */
   let prevEnd=0;
-  for(const ph of PHASES){
+  for(let i=0;i<PHASES.length;i++){
+    const ph=PHASES[i];
     g+=`<rect x="${x(prevEnd)}" y="${T}" width="${x(ph.end)-x(prevEnd)}" height="${H-T-B}" fill="${ph.tint}"/>`;
-    g+=`<text x="${(x(prevEnd)+x(ph.end))/2}" y="${T-8}" font-size="10" fill="#5B6E77" text-anchor="middle">${ph.name}</text>`;
+    if(i===PHASES.length-1){
+      g+=`<text x="${x(ph.end)-4}" y="${T-8}" font-size="10" fill="#5B6E77" text-anchor="end">${ph.name}</text>`;
+    }else{
+      g+=`<text x="${(x(prevEnd)+x(ph.end))/2}" y="${T-8}" font-size="10" fill="#5B6E77" text-anchor="middle">${ph.name}</text>`;
+    }
     prevEnd=ph.end;
   }
   /* phase boundary lines */
