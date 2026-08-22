@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEDRO-150 · When will Pedro get a job?</title>
+<meta name="description" content="A Phase III, open-label, single-subject employment trial. N=1. Global enrollment. Actively recruiting (an employer).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EDF2EF;
+    --card:#F9FBFA;
+    --ink:#10293F;
+    --muted:#5B6E77;
+    --line:#C9D5CF;
+    --recruit:#12805C;
+    --recruit-soft:#E0F0E9;
+    --amber:#C97F10;
+    --red:#B3372F;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+    --disp:'Space Grotesk',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--disp);line-height:1.55}
+
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+
+  .strip{border-bottom:1px solid var(--line);background:var(--card)}
+  .strip .wrap{display:flex;flex-wrap:wrap;gap:6px 22px;padding:10px 20px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .strip b{color:var(--ink);font-weight:600}
+
+  header.hero{padding:56px 0 40px;border-bottom:1px solid var(--line)}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--recruit);background:var(--recruit-soft);border:1px solid var(--recruit);border-radius:3px;padding:6px 12px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--recruit);animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  @media (prefers-reduced-motion:reduce){.dot{animation:none}}
+  h1{font-size:clamp(34px,6vw,58px);font-weight:700;letter-spacing:-.02em;margin:18px 0 10px;line-height:1.08}
+  .sub{color:var(--muted);max-width:58ch;font-size:16px}
+  .sub b{color:var(--ink)}
+
+  section{padding:40px 0;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .timer-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:end}
+  @media(max-width:640px){.timer-grid{grid-template-columns:1fr}}
+  .day-big{font-family:var(--mono);font-weight:600;font-size:clamp(56px,11vw,104px);line-height:1;letter-spacing:-.03em}
+  .day-big small{font-size:.32em;color:var(--muted);font-weight:500;letter-spacing:0}
+  .clock{font-family:var(--mono);font-size:clamp(22px,4vw,34px);font-weight:500;letter-spacing:.02em;text-align:right}
+  @media(max-width:640px){.clock{text-align:left}}
+  .clock .lbl{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px;font-weight:600}
+  .bar{margin-top:26px;height:14px;background:var(--card);border:1px solid var(--line);border-radius:2px;overflow:hidden;position:relative}
+  .bar-fill{height:100%;background:var(--recruit);transition:width .8s ease}
+  .bar-cap{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:6px;letter-spacing:.06em;text-transform:uppercase}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px}
+  .panel h3{font-size:17px;font-weight:700;margin-bottom:2px}
+  .panel .note{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:14px}
+  svg text{font-family:var(--mono)}
+  .stat-row{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .stat-row b{color:var(--ink)}
+
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px}
+  .card h4{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .card p,.card li{font-size:14px;color:var(--ink)}
+  .card ul{list-style:none}
+  .card li{padding:4px 0;border-bottom:1px dashed var(--line)}
+  .card li:last-child{border-bottom:none}
+  .card li::before{content:"· ";color:var(--muted)}
+
+  .predict{background:var(--ink);color:#EAF1EE;border-radius:4px;padding:26px}
+  .predict h3{font-size:20px;margin-bottom:4px}
+  .predict .note{font-family:var(--mono);font-size:12px;color:#9FB4AC;margin-bottom:18px}
+  .form-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  @media(max-width:640px){.form-row{grid-template-columns:1fr}}
+  label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9FB4AC;margin-bottom:5px}
+  input,select{width:100%;padding:10px 12px;font-family:var(--mono);font-size:14px;color:var(--ink);background:#F9FBFA;border:1px solid #3A5063;border-radius:3px}
+  input:focus,select:focus,button:focus{outline:2px solid var(--recruit);outline-offset:2px}
+  .btn{margin-top:16px;padding:12px 20px;font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--recruit);border:none;border-radius:3px;cursor:pointer}
+  .btn:hover{background:#0E6A4C}
+  .your-bet{margin-top:16px;font-family:var(--mono);font-size:13px;color:#CFE3DA;border-left:3px solid var(--recruit);padding-left:12px;display:none}
+
+  footer{padding:34px 0 60px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  footer a{color:var(--recruit)}
+  .ae{font-size:13px}
+</style>
+</head>
+<body>
+
+<div class="strip"><div class="wrap">
+  <span>Protocol: <b>PEDRO-150</b></span>
+  <span>Phase: <b>III (of life)</b></span>
+  <span>Design: <b>Open-label, single-subject</b></span>
+  <span>Enrollment: <b>N = 1, global</b></span>
+  <span>Sponsor: <b>Self-funded (regrettably)</b></span>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <span class="badge"><span class="dot"></span>Actively recruiting (an employer)</span>
+  <h1>When will Pedro get&nbsp;a&nbsp;job?</h1>
+  <p class="sub">A prospective, open-label, single-subject employment trial. One participant, <b>150 days</b>, a <b>global search</b> (subject is 100% mobile), and a primary endpoint every Medical Affairs leader understands: <b>a signed offer letter</b>. Interim analyses published weekly on LinkedIn.</p>
+</div></header>
+
+<section><div class="wrap">
+  <p class="eyebrow">Time on study</p>
+  <div class="timer-grid">
+    <div class="day-big"><span id="dayNum">···</span><small> / 150 days</small></div>
+    <div class="clock"><span id="countdown">···</span><span class="lbl">until database lock (23 Dec 2026)</span></div>
+  </div>
+  <div class="bar"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
+  <div class="bar-cap"><span>First subject in: 27 Jul</span><span id="pct">0% of study elapsed</span><span>Last day on study: 23 Dec</span></div>
+</div></section>
+
+<section><div class="wrap">
+  <p class="eyebrow">Interim efficacy analysis</p>
+  <div class="panel">
+    <h3>Kaplan-Meier estimate: probability of remaining unemployed</h3>
+    <p class="note">ITT population (n=1). Phased by hiring funnel. Censoring for holidays, "we'll circulate internally", and ghosting.</p>
+    <svg id="km" viewBox="0 0 720 340" width="100%" role="img" aria-label="Survival curve of unemployment probability declining over 150 days, split into three hiring phases"></svg>
+    <div class="stat-row">
+      <span>Median time to offer: <b>pending</b></span>
+      <span>Critical path: <b>enter an interview process by day 78</b></span>
+      <span>HR vs. quietly waiting: <b>0.42</b> (95% CI: trust me)</span>
+    </div>
+    <p class="note" style="margin-top:12px;margin-bottom:0">Working backwards from database lock: interview rounds take 4 to 7 weeks and offers take 2 to 4 more. Any process not started by day 78 cannot mathematically reach signature by day 150. The urgency is not a vibe. It is arithmetic.</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <p class="eyebrow">Study design</p>
+  <div class="cards">
+    <div class="card">
+      <h4>Primary endpoint</h4>
+      <p>Signed offer letter for a senior pharma role (Medical Affairs leadership or adjacent commercial strategy). Assessed continuously. No surrogate endpoints. A "strong pipeline of conversations" does not pay rent.</p>
+    </div>
+    <div class="card">
+      <h4>Secondary endpoints</h4>
+      <ul>
+        <li>Warm introductions ≥ 1 per week</li>
+        <li>Interview processes entered before day 78</li>
+        <li>LinkedIn reshares of the weekly market post</li>
+        <li>Recruiters who reply within one calendar year</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Enrollment: global</h4>
+      <p style="margin-bottom:8px">Open worldwide. Subject is fully mobile and relocation is not a barrier. Initial recruiting sites:</p>
+      <ul>
+        <li>🇸🇬 Singapore &nbsp;🇹🇭 Thailand &nbsp;🇦🇪 UAE</li>
+        <li>🇨🇭 Switzerland &nbsp;🇵🇹 Portugal &nbsp;🇧🇷 Brazil</li>
+        <li>🌍 Additional sites activated on employer interest</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h4>Inclusion criteria (for employers)</h4>
+      <ul>
+        <li>Has headcount, or is willing to invent some</li>
+        <li>Believes capability beats boxes ticked</li>
+        <li>Reads a CV in under 7 seconds and gets it</li>
+        <li>One introduction beats a hundred applications</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="predict">
+    <h3>Cast your prediction</h3>
+    <p class="note">Pick the day the primary endpoint is met. Your bet is saved on this device and copied for posting. The comments section is the real prediction market.</p>
+    <div class="form-row">
+      <div><label for="pDate">Predicted offer date</label><input type="date" id="pDate" min="2026-07-27" max="2026-12-23"></div>
+      <div><label for="pMarket">Market</label>
+        <select id="pMarket">
+          <option>Singapore</option><option>Thailand</option><option>UAE</option>
+          <option>Switzerland</option><option>Portugal</option><option>Brazil</option>
+          <option>Somewhere nobody predicted</option>
+        </select></div>
+      <div><label for="pName">Your name (optional)</label><input type="text" id="pName" placeholder="Anonymous forecaster"></div>
+    </div>
+    <button class="btn" id="betBtn">Lock in prediction & copy for LinkedIn</button>
+    <p class="your-bet" id="yourBet"></p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <p class="eyebrow">Adverse events log</p>
+  <div class="panel ae">
+    <ul style="list-style:none">
+      <li style="padding:6px 0;border-bottom:1px dashed var(--line)">Grade 1: "We've decided to move forward with other candidates." Frequency: common. Ongoing.</li>
+      <li style="padding:6px 0;border-bottom:1px dashed var(--line)">Grade 2: Application portals requesting the CV be retyped, field by field, after uploading the CV. Causality: definitely related.</li>
+      <li style="padding:6px 0;border-bottom:1px dashed var(--line)">Grade 2: "Let's keep in touch" (no further contact recorded). Resolved with coffee.</li>
+      <li style="padding:6px 0">Serious adverse events: none. Subject remains in excellent spirits and dangerously well-networked.</li>
+    </ul>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <p>PEDRO-150 is an investigator-initiated study. No employers were harmed in the making of this website. That changes at contract signature. Follow the weekly interim analyses on <a href="https://www.linkedin.com/in/salgueiromp/" id="liLink">LinkedIn</a>, or read <a href="https://lnkd.in/p/edJrJ-a6" id="originLink">the post that started everything</a>.</p>
+  <p style="margin-top:8px">Data cutoff: <span id="stamp"></span> · This is a joke. The job search is not.</p>
+</div></footer>
+
+<script>
+/* ================= CONFIG ================= */
+const START_DATE = "2026-07-27";   // Day 1 of the 150-day challenge
+const LINKEDIN_URL = "https://www.linkedin.com/in/salgueiromp/"; // profile
+const ORIGIN_POST = "https://lnkd.in/p/edJrJ-a6"; // the post that started everything
+/* Hiring funnel phases (day the phase ends) */
+const PHASES = [
+  {name:"Phase 1 · Enter interview processes", end:78,  tint:"#E4EFE8"},
+  {name:"Phase 2 · Interview rounds",          end:122, tint:"#F3EDDD"},
+  {name:"Phase 3 · Offer & negotiation",       end:150, tint:"#F2E4E0"}
+];
+/* ========================================== */
+
+const TOTAL = 150;
+const start = new Date(START_DATE + "T00:00:00");
+const end = new Date(start.getTime() + TOTAL*86400000);
+document.getElementById("liLink").href = LINKEDIN_URL;
+document.getElementById("originLink").href = ORIGIN_POST;
+
+function tick(){
+  const now = new Date();
+  const day = Math.min(TOTAL, Math.max(1, Math.floor((now-start)/86400000)+1));
+  document.getElementById("dayNum").textContent = String(day).padStart(3,"0");
+  let ms = Math.max(0, end-now);
+  const d=Math.floor(ms/86400000); ms-=d*86400000;
+  const h=Math.floor(ms/3600000);  ms-=h*3600000;
+  const m=Math.floor(ms/60000);    ms-=m*60000;
+  const s=Math.floor(ms/1000);
+  document.getElementById("countdown").textContent =
+    `${d}d ${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+  const pct = Math.min(100, Math.max(0,((now-start)/(end-start))*100));
+  document.getElementById("barFill").style.width = pct+"%";
+  document.getElementById("pct").textContent = pct.toFixed(1)+"% of study elapsed";
+  drawKM(day);
+}
+document.getElementById("stamp").textContent = new Date().toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"});
+
+/* ---- phased Kaplan-Meier joke curve ---- */
+/* Decay speeds up per phase: outreach is slow attrition, interviews faster, negotiation decisive */
+function survival(d){
+  const drops = [
+    [10,.94],[18,.93],[26,.93],[34,.92],[42,.92],[50,.91],[58,.91],[66,.90],[74,.90],
+    [84,.86],[92,.85],[100,.84],[108,.83],[116,.82],
+    [126,.74],[133,.70],[140,.62],[146,.52]
+  ];
+  let s=1.0;
+  for(const [t,f] of drops){ if(d>=t) s*=f; }
+  return Math.max(0.03,s);
+}
+function drawKM(today){
+  const svg=document.getElementById("km");
+  const W=720,H=340,L=54,R=16,T=34,B=44;
+  const x=d=>L+(d/TOTAL)*(W-L-R);
+  const y=p=>T+(1-p)*(H-T-B);
+  let g="";
+  /* phase bands */
+  let prevEnd=0;
+  for(const ph of PHASES){
+    g+=`<rect x="${x(prevEnd)}" y="${T}" width="${x(ph.end)-x(prevEnd)}" height="${H-T-B}" fill="${ph.tint}"/>`;
+    g+=`<text x="${(x(prevEnd)+x(ph.end))/2}" y="${T-8}" font-size="10" fill="#5B6E77" text-anchor="middle">${ph.name}</text>`;
+    prevEnd=ph.end;
+  }
+  /* phase boundary lines */
+  for(const ph of PHASES.slice(0,-1)){
+    g+=`<line x1="${x(ph.end)}" y1="${T}" x2="${x(ph.end)}" y2="${H-B}" stroke="#B9C7C0" stroke-width="1" stroke-dasharray="2 3"/>`;
+  }
+  /* critical path marker at day 78 */
+  g+=`<line x1="${x(78)}" y1="${T}" x2="${x(78)}" y2="${H-B}" stroke="#C97F10" stroke-width="2" stroke-dasharray="6 4"/>`;
+  g+=`<text x="${x(78)-6}" y="${H-B-8}" font-size="10" font-weight="600" fill="#C97F10" text-anchor="end">Last call for new processes</text>`;
+  /* gridlines + axis labels */
+  for(let p=0;p<=1.001;p+=0.25){
+    g+=`<line x1="${L}" y1="${y(p)}" x2="${W-R}" y2="${y(p)}" stroke="#DCE5E0" stroke-width="1" opacity="0.7"/>`;
+    g+=`<text x="${L-8}" y="${y(p)+4}" font-size="11" fill="#5B6E77" text-anchor="end">${Math.round(p*100)}%</text>`;
+  }
+  for(let d=0;d<=TOTAL;d+=30){
+    g+=`<text x="${x(d)}" y="${H-B+18}" font-size="11" fill="#5B6E77" text-anchor="middle">${d}</text>`;
+  }
+  g+=`<text x="${(L+W-R)/2}" y="${H-6}" font-size="11" fill="#5B6E77" text-anchor="middle">Days on study</text>`;
+  /* step curve */
+  let path=`M ${x(0)} ${y(1)}`;
+  let prev=1;
+  for(let d=1;d<=TOTAL;d++){
+    const s=survival(d);
+    if(s!==prev){ path+=` L ${x(d)} ${y(prev)} L ${x(d)} ${y(s)}`; prev=s; }
+  }
+  path+=` L ${x(TOTAL)} ${y(prev)}`;
+  g+=`<path d="${path}" fill="none" stroke="#10293F" stroke-width="2.5"/>`;
+  /* censoring ticks */
+  for(const c of [22,55,96,130]){
+    g+=`<line x1="${x(c)}" y1="${y(survival(c))-6}" x2="${x(c)}" y2="${y(survival(c))+6}" stroke="#10293F" stroke-width="2"/>`;
+  }
+  /* today marker */
+  if(today>0 && today<=TOTAL){
+    g+=`<line x1="${x(today)}" y1="${T}" x2="${x(today)}" y2="${H-B}" stroke="#12805C" stroke-width="2" stroke-dasharray="5 4"/>`;
+    const anchor = x(today) > W-140 ? "end" : "start";
+    const tx = x(today) > W-140 ? x(today)-6 : x(today)+6;
+    g+=`<text x="${tx}" y="${T+16}" font-size="11" font-weight="600" fill="#12805C" text-anchor="${anchor}">You are here (day ${today})</text>`;
+  }
+  svg.innerHTML=g;
+}
+
+/* ---- predictions ---- */
+const KEY="pedro150_bet";
+function showBet(b){
+  const el=document.getElementById("yourBet");
+  el.style.display="block";
+  el.textContent=`Your prediction on file: ${b.name||"Anonymous forecaster"} bets on ${b.date} · ${b.market}. Recorded. No refunds.`;
+}
+try{ const saved=JSON.parse(localStorage.getItem(KEY)); if(saved) showBet(saved);}catch(e){}
+document.getElementById("betBtn").addEventListener("click",()=>{
+  const date=document.getElementById("pDate").value;
+  if(!date){ alert("Pick a date. Even a pessimistic one."); return; }
+  const bet={date, market:document.getElementById("pMarket").value,
+             name:document.getElementById("pName").value.trim()};
+  try{ localStorage.setItem(KEY,JSON.stringify(bet)); }catch(e){}
+  showBet(bet);
+  const d=new Date(date+"T00:00:00");
+  const day=Math.round((d-start)/86400000)+1;
+  const txt=`My official PEDRO-150 prediction: primary endpoint (signed offer) met on day ${day} · ${bet.market}. Cast yours: `+window.location.href;
+  navigator.clipboard?.writeText(txt).then(()=>{
+    document.getElementById("betBtn").textContent="Copied. Paste it in the comments ✓";
+    setTimeout(()=>document.getElementById("betBtn").textContent="Lock in prediction & copy for LinkedIn",2500);
+  }).catch(()=>{});
+});
+
+tick();
+setInterval(tick,1000);
+</script>
+</body>
+</html>
